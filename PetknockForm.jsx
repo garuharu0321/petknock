@@ -181,59 +181,76 @@ export default function PetknockForm() {
     );
   }
 
-  // ── 완료 화면 ─────────────────────────────────────────────────────────────
+// ── 완료 화면 ─────────────────────────────────────────────────────────────
   if(submitted){
     return (
       <div style={{minHeight:"100vh",background:CREAM,fontFamily:"-apple-system,sans-serif"}}>
+        <style>{`.pk-fold>summary{list-style:none}.pk-fold>summary::-webkit-details-marker{display:none}.pk-fold .pk-cue{display:inline-block;transition:transform .2s}.pk-fold[open] .pk-cue{transform:rotate(180deg)}`}</style>
         <TopBar progress={100} label="접수 완료" onBack={back} showBack={false} />
         <div style={{maxWidth:520,margin:"0 auto",padding:"20px 16px 48px",display:"flex",flexDirection:"column",gap:14}}>
 
-          {/* 완료 배너 */}
-          <div style={{background:GREEN,borderRadius:24,padding:"28px 20px",textAlign:"center"}}>
-            <div style={{fontSize:52,marginBottom:10}}>🐾</div>
-            <div style={{color:WHITE,fontSize:22,fontWeight:800,marginBottom:6}}>접수가 완료됐어요!</div>
-            <div style={{color:"rgba(255,255,255,0.75)",fontSize:13,lineHeight:1.7}}>
-              입력하신 조건 확인 후 맞는 곳을<br/>1~3곳으로 추려드릴게요
-            </div>
+          {/* 1. 완료 배너 (짧게) */}
+          <div style={{background:GREEN,borderRadius:22,padding:"22px 20px",textAlign:"center"}}>
+            <div style={{fontSize:44,marginBottom:8}}>🐾</div>
+            <div style={{color:WHITE,fontSize:21,fontWeight:800}}>접수가 완료됐어요!</div>
           </div>
 
-          {/* 접수번호 */}
-          <div style={{background:WHITE,borderRadius:20,padding:"18px 20px",border:`1.5px solid ${TAN}`,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+          {/* 2. 카톡 상담 시작 — 안내 + 접수번호 + 노란 버튼을 한 덩어리로 */}
+          <div style={{background:WHITE,borderRadius:22,padding:"20px 18px",border:`1.5px solid ${TAN}`,display:"flex",flexDirection:"column",gap:15}}>
+
+            {/* 안내 (이득 톤) */}
             <div>
-              <div style={{color:MUTED,fontSize:11,marginBottom:4,fontWeight:600,letterSpacing:"0.05em"}}>접수번호</div>
-              <div style={{color:GREEN,fontSize:17,fontWeight:800}}>{receiptId}</div>
-              <div style={{color:MUTED,fontSize:11,marginTop:4}}>상담 시 접수번호를 알려주세요</div>
+              <div style={{color:GREEN,fontSize:15,fontWeight:800,marginBottom:10,display:"flex",alignItems:"center",gap:6}}>
+                <span>💬</span> 상담은 카카오톡으로 진행돼요
+              </div>
+              <div style={{color:"#555",fontSize:13,lineHeight:1.85}}>
+                <div><b style={{color:GREEN}}>①</b> 아래 버튼으로 펫노크 채널을 추가하고</div>
+                <div><b style={{color:GREEN}}>②</b> 접수번호를 보내주시면, 담당자가 입력하신 정보로 맞는 곳을 찾아 바로 연락드려요.</div>
+              </div>
             </div>
-            <button onClick={copyId} style={{padding:"8px 16px",borderRadius:20,border:`1.5px solid ${GREEN}`,background:copiedId?GREEN:WHITE,color:copiedId?WHITE:GREEN,fontSize:12,fontWeight:700,cursor:"pointer",transition:"all 0.2s",flexShrink:0}}>
-              {copiedId?"복사됨 ✓":"복사"}
-            </button>
-          </div>
 
-          {/* 접수 내용 */}
-          <div style={{background:WHITE,borderRadius:20,padding:"18px 20px",border:`0.5px solid ${BORDER}`}}>
-            <div style={{color:GREEN,fontWeight:700,fontSize:13,marginBottom:12,display:"flex",alignItems:"center",gap:6}}>
-              <span>📋</span> 접수 내용 확인
+            {/* 접수번호 + 복사 */}
+            <div style={{background:CREAM,borderRadius:14,padding:"12px 14px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:10}}>
+              <div style={{minWidth:0}}>
+                <div style={{color:MUTED,fontSize:10,marginBottom:3,fontWeight:700,letterSpacing:"0.05em"}}>내 접수번호</div>
+                <div style={{color:GREEN,fontSize:17,fontWeight:800,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{receiptId}</div>
+              </div>
+              <button onClick={copyId} style={{padding:"9px 16px",borderRadius:12,border:`1.5px solid ${GREEN}`,background:copiedId?GREEN:WHITE,color:copiedId?WHITE:GREEN,fontSize:12,fontWeight:800,cursor:"pointer",transition:"all 0.2s",flexShrink:0}}>
+                {copiedId?"복사됨 ✓":"복사하기"}
+              </button>
             </div>
-            <pre style={{margin:0,whiteSpace:"pre-wrap",wordBreak:"break-word",fontFamily:"inherit",color:"#444",fontSize:12,lineHeight:1.9}}>{summary}</pre>
+
+            {/* 노란 카톡 버튼 + 짧은 힌트 */}
+            <div>
+              <a href={KAKAO_CHAT_URL} target="_blank" rel="noreferrer"
+                style={{display:"flex",alignItems:"center",justifyContent:"center",gap:8,padding:"16px",borderRadius:16,background:"#FEE500",color:"#3C1E1E",textDecoration:"none",fontSize:15,fontWeight:800}}>
+                <span style={{fontSize:18}}>💬</span> 카카오톡으로 상담 시작하기
+              </a>
+              <div style={{color:MUTED,fontSize:11,textAlign:"center",marginTop:8}}>
+                접수번호를 복사한 뒤 채널 대화창에 붙여넣어 보내주세요
+              </div>
+            </div>
           </div>
 
-          {/* 카카오 상담 연결 */}
-          <div style={{background:LGREEN,borderRadius:18,padding:"14px 16px",color:"#3D6B4A",fontSize:12,lineHeight:1.7,textAlign:"center"}}>
-            접수번호를 복사한 뒤 카톡 상담에서 보내주세요.<br/>입력하신 정보와 빠르게 대조할 수 있어요.
-          </div>
-          <a href={KAKAO_CHAT_URL} target="_blank" rel="noreferrer"
-            style={{display:"block",padding:"17px",borderRadius:20,background:GREEN,color:WHITE,textAlign:"center",textDecoration:"none",fontSize:15,fontWeight:800,letterSpacing:"0.02em"}}>
-            💬 펫노크 카톡 상담하기
-          </a>
+          {/* 3. 접수 내용 — 기본 닫힘(접기) */}
+          <details className="pk-fold" style={{background:WHITE,borderRadius:18,border:`0.5px solid ${BORDER}`,overflow:"hidden"}}>
+            <summary style={{padding:"15px 18px",color:GREEN,fontWeight:700,fontSize:13,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <span style={{display:"flex",alignItems:"center",gap:6}}><span>📋</span> 접수 내용 확인하기</span>
+              <span className="pk-cue" style={{color:MUTED,fontSize:13}}>▾</span>
+            </summary>
+            <div style={{padding:"0 18px 18px"}}>
+              <pre style={{margin:0,whiteSpace:"pre-wrap",wordBreak:"break-word",fontFamily:"inherit",color:"#444",fontSize:12,lineHeight:1.9}}>{summary}</pre>
+            </div>
+          </details>
 
-          <button onClick={restart} style={{padding:"15px",borderRadius:20,border:`1.5px solid ${GREEN}`,background:"transparent",color:GREEN,fontSize:14,fontWeight:700,cursor:"pointer"}}>
+          {/* 4. 다른 아이 입력 */}
+          <button onClick={restart} style={{padding:"15px",borderRadius:18,border:`1.5px solid ${GREEN}`,background:"transparent",color:GREEN,fontSize:14,fontWeight:700,cursor:"pointer"}}>
             다른 아이 정보 입력하기
           </button>
         </div>
       </div>
     );
   }
-
   // ── 스텝 화면 ─────────────────────────────────────────────────────────────
   return (
     <div style={{minHeight:"100vh",background:CREAM,fontFamily:"-apple-system,sans-serif"}}>
