@@ -11,7 +11,7 @@ const LOGO = "data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJ
 
 // 기존 Apps Script 배포 URL입니다. Code.gs를 교체한 뒤 같은 배포를 새 버전으로 업데이트하세요.
 const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbz566Qnfo7PcNfD2IPRK4kOahzDtOYkk_zpKam3jz7AygT2YgR5XrNe8P0o1F6FYCI/exec";
-const KAKAO_CHAT_URL = "http://pf.kakao.com/_qxixjGX/chat";
+const KAKAO_CHAT_URL = "http://pf.kakao.com/_TxfxlXX/chat";
 
 const STEPS = [
   { id:"guardian",    emoji:"👤", title:"보호자 연락처를 알려주세요",       subtitle:"추천 결과와 상담 안내에만 사용해요" },
